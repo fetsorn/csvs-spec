@@ -1,0 +1,76 @@
+#+TITLE: csvs (comma-separated value store)
+#+OPTIONS: toc:nil
+
+* Structure of metadir/
+
+The `metadir` directory contains comma-separated plain-text files. Each comma-separated file can have only two columns: "key,value".
+
+metadir/props/ - contains keys and values of every property.
+
+#+NAME: metadir/props/prop1/index.csv
+#+begin_src txt
+key1,value1
+key2,value2
+#+end_src
+
+#+NAME: metadir/props/prop2/index.csv
+#+begin_src txt
+key3,value3
+key4,value4
+#+end_src
+
+metadir/pairs/ - contains relations between properties.
+
+#+NAME: metadir/pairs/prop1-prop2.csv
+#+begin_src txt
+key1,key3
+key2,key4
+#+end_src
+
+* Format of metadir.json
+
+The `metadir.json` file describes the schema of a csvs database - relations between properties, their aliases and data types.
+
+#+NAME: metadir.json
+#+begin_src js
+{
+    "prop1": {
+        "type": "string"
+    },
+    "prop2": {
+        "parent": "prop1",
+        "type": "string"
+    }
+}
+#+end_src
+
+** object
+
+ - "parent" - The name of the prop described by the current prop. Prop that does not have a parent is considered to be a root of the database.
+
+ - "dir" - The directory in props where index.csv is stored. Defaults to prop's name.
+
+ - "label" - The property name to use in data structures. Defaults to prop's name.
+
+ - "type" - The data type of value. For a list of data types see below.
+
+** data types
+
+ - not specified - stored as is, key is sha256sum of value
+
+ - "date" - stored as is, key is sha256sum of value
+
+ - "string" - stored as JSON escaped string, key is sha256sum of the unescaped value
+
+ - "hash" - both key and value is the same sha256sum, not stored in props/, only appears in pairs/
+
+ - "rule" - stored as
+
+* More csvs projects
+[[https://github.com/fetsorn/csvs-ui][csvs-ui]] - Web UI. Develop the story of your own data.
+
+[[https://github.com/fetsorn/csvs-js][csvs-js]] - WASM/JS implementation. Serverless CRUD.
+
+[[https://github.com/fetsorn/csvs-sh][csvs-sh]] - command-line interface. A reference implementation.
+
+[[https://github.com/fetsorn/csvs-template][csvs-template]] - a template database for genealogy
