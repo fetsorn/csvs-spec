@@ -67,7 +67,7 @@ The `metadir.json` file describes the schema of a csvs database - relations betw
  - "rule" - stored as
 
 * More csvs projects
-[[https://github.com/fetsorn/csvs-ui][csvs-ui]] - Web UI. Develop the story of your own data.
+[[https://github.com/fetsorn/qualia][qualia]] - Web UI. Tell the story of your own data.
 
 [[https://github.com/fetsorn/csvs-js][csvs-js]] - WASM/JS implementation. Serverless CRUD.
 
